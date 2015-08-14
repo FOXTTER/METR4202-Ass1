@@ -1,25 +1,21 @@
 clc
-setupNXT();
+[h, mA, mB, mC] = setupNXT();
 disp('Put robot arm in desired position and press enter')
 pause
+mA.Stop('Brake');
+mB.Stop('Brake');
+mC.Stop('Brake');
 M = importdata('coords.txt');
-for i = 1:size(M,1)
-    break;
-    fprintf('Point: %d\n',i)
+current = M(1,:,:);
+for i = 2:size(M,1)
+    fprintf('Point: %d\n',i);
     disp(M(i,:,:))
+    desired = M(i,:,:);
     %Convert the point to angles for the motors
-    %mA = NXTMotor('A', 'Power', 50);
-    %mA.TachoLimit = 20; % Angle for motor A
-    %mA.SendToNXT(); % this is actually the moment we start the motor
-    %mB = NXTMotor('B', 'Power', 50);
-    %mB.TachoLimit = 20; % Angle for motor B
-    %mB.SendToNXT();
-    %mC = NXTMotor('C', 'Power', 50);
-    %mC.TachoLimit = 20; % Angle for motor C
-    %mC.SendToNXT();
-    %pause(1);
-    %mA.Stop('Brake');
-    %mB.Stop('Brake');
-    %mC.Stop('Brake');
-    %Activate the engines for the angles
+    [alpha, beta, gamma] = calcAngles(current, desired);
+    current = desired;
+    moveEngine(mA,10,alpha);
+    moveEngine(mC,-5,gamma);
+    moveEngine(mB,-5,beta);
+    pause(0.5);
 end
