@@ -1,15 +1,10 @@
-clear
 clc
-%h = COM_OpenNXT()
-%COM_SetDefaultNXT(h)
-%mA = NXTMotor('A', 'Power', 50);
-%mA.TachoLimit = 20;
-%mA.SendToNXT(); % this is actually the moment we start the motor
-%pause(1);
-%mA.Stop('Brake');
-%COM_CloseNXT(COM_GetDefaultNXT());
+setupNXT();
+disp('Put robot arm in desired position and press enter')
+pause
 M = importdata('coords.txt');
 for i = 1:size(M,1)
+    break;
     fprintf('Point: %d\n',i)
     disp(M(i,:,:))
     %Convert the point to angles for the motors
