@@ -17,11 +17,14 @@ a2c_new = norm(desired - joint_A);
 a2c_old = norm(start - joint_A);
 base2a = 0.16/LEGO;
 % Calculations
+% Alpha = first joint
 alpha = int32(rad2deg(atan2(desired(1)-base(1),desired(2)-base(2)) - atan2(start(1)-base(1),start(2)-base(2)))*mA_gear);
-gamma = int32(rad2deg(acos((base2a^2 + a2b^2 + a2c_new^2)/(2*base2a*a2b)) - acos((base2a^2 + a2b^2 + a2c_old^2)/(2*base2a*a2b))));
+% Beta = second joint
 phi_e = @(T) acos((a2b^2+T^2-b2c^2)/(2*a2b*T));
-phi_f = @(T,zp) acos((base2a-z_p)/T);
+phi_f = @(T,z_p) acos((base2a-z_p)/T);
 beta  = int32(rad2deg((phi_e(a2c_new) + phi_f(a2c_new,desired(3))) - (phi_e(a2c_old) + phi_f(a2c_old,start(3)))));
-
+% Gamma = third joint
+phi_d = @(T) acos((base2a^2 + a2b^2 - T^2)/(2*base2a*a2b))
+gamma = int32(rad2deg(phi_d(a2c_new)-phi_d(a2c_old)));
 end
 
