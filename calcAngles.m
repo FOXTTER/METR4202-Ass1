@@ -7,15 +7,15 @@ mA_gear = 55/24;
 mB_gear = 1;
 mC_gear = 1;
 % Position parameters of base
-base = [5.5, -2.125, 0];
+base = [5.5*LEGO, -2.125*LEGO, 0];
 % Position of joint A
-joint_A = [5.5, -2.125, 0.16/LEGO];
+joint_A = [5.5*LEGO, -2.125*LEGO, 0.16];
 %Lengths of robot
-a2b = 0.172/LEGO;
-b2c = 0.182/LEGO;
+a2b = 0.172;
+b2c = 0.182;
 a2c_new = norm(desired - joint_A);
 a2c_old = norm(start - joint_A);
-base2a = 0.16/LEGO;
+base2a = 0.16;
 % Calculations
 % Alpha = first joint
 alpha = int32(rad2deg(atan2(desired(1)-base(1),desired(2)-base(2)) - atan2(start(1)-base(1),start(2)-base(2)))*mA_gear);
