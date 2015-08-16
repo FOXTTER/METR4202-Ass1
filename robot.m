@@ -24,7 +24,7 @@ for i = 2:size(M,1)
     [alpha, beta, gamma] = calcAngles(current, desired);
     fprintf('Angles (a,b,g) = (%d, %d, %d)\n',alpha,beta,gamma);
     current = desired;
-    moveEngine(mA,-20,alpha);
+    moveEngine(mA,-50,alpha);
     if (beta < 20)
        moveEngine(mB,-20,beta);
     else
