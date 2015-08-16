@@ -1,3 +1,4 @@
+%bla
 function [] = angleTest(motor, angle)
 start = motor.ReadFromNXT().Position;
 moveEngine(motor,-5,angle);
