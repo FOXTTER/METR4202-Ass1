@@ -1,16 +1,16 @@
-clc
-clear
-[h, mA, mB, mC] = setupNXT();
-mA.SpeedRegulation = true;
-mB.SpeedRegulation = true;
-mC.SpeedRegulation = true;
-disp('Put robot arm in desired position and press enter')
-pause
-mA.Stop('Brake');
-mB.Stop('Brake');
-mC.Stop('Brake');
-disp('Press enter to start')
-pause
+% clc
+% clear
+% [h, mA, mB, mC] = setupNXT();
+% mA.SpeedRegulation = true;
+% mB.SpeedRegulation = true;
+% mC.SpeedRegulation = true;
+% disp('Put robot arm in desired position and press enter')
+% pause
+% mA.Stop('Brake');
+% mB.Stop('Brake');
+% mC.Stop('Brake');
+% disp('Press enter to start')
+% pause
 M = importdata('coords.txt');
 M(:,1:2) = M(:,1:2)*0.032;
 M(:,3) = M(:,3)*0.020;
@@ -24,13 +24,13 @@ for i = 2:size(M,1)
     [alpha, beta, gamma] = calcAngles(current, desired);
     fprintf('Angles (a,b,g) = (%d, %d, %d)\n',alpha,beta,gamma);
     current = desired;
-    moveEngine(mA,-10,alpha);
+    moveEngine(mA,-20,alpha);
     if (beta < 20)
-       moveEngine(mB,-2,beta);
+       moveEngine(mB,-20,beta);
     else
-       moveEngine(mB,-10,beta);
+       moveEngine(mB,-20,beta);
     end
-    moveEngine(mC,-10,gamma);
+    moveEngine(mC,-20,gamma);
     mA.WaitFor();
     mB.WaitFor();
     mC.WaitFor();

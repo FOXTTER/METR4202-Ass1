@@ -1,9 +1,9 @@
 %bla
 function [] = angleTest(motor, angle)
 start = motor.ReadFromNXT().Position;
-moveEngine(motor,-20,angle);
+moveEngine(motor,-10,angle);
 % Read Data and Show
-pause(1.5)
+pause(2)
 data = motor.ReadFromNXT().Position;
 fprintf('Start angle: %d\n', start);
 fprintf('End angle: %d\n', data);

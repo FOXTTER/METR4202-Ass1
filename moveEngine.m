@@ -16,7 +16,7 @@ elseif (port == 1)
     end
 elseif (port == 2)
     if(angle > 0)
-        angle = angle + 2;
+        angle = angle + 1;
     else
         angle = angle + 2;
     end
@@ -25,6 +25,6 @@ engine.TachoLimit = abs(angle); % Angle for motor A
 engine.Power = power * sign(angle);
 engine.ActionAtTachoLimit = 'Holdbrake';
 engine.SendToNXT();
-%engine.WaitFor();
+engine.WaitFor();
 end
 
