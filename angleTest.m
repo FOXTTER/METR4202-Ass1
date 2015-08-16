@@ -7,6 +7,6 @@ pause(1.5)
 data = motor.ReadFromNXT().Position;
 fprintf('Start angle: %d\n', start);
 fprintf('End angle: %d\n', data);
-fprintf('Moved angle: %d\n', data-start);
-fprintf('Desired angle: %d\n', angle);
+fprintf('Moved angle intervall: %d\n', data-start);
+fprintf('Desired angle intervall: %d\n', angle);
 fprintf('Deviation angle: %d\n', angle+(data-start));
