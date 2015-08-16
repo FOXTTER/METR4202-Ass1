@@ -12,7 +12,7 @@ elseif (port == 1)
     if(angle > 0)
         angle = angle + 4;
     else
-        angle = angle + 6;
+        angle = angle + 4;
     end
 elseif (port == 2)
     if(angle > 0)

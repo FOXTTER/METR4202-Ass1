@@ -1,7 +1,7 @@
 %bla
 function [] = angleTest(motor, angle)
 start = motor.ReadFromNXT().Position;
-moveEngine(motor,-10,angle);
+moveEngine(motor,-20,angle);
 % Read Data and Show
 pause(2)
 data = motor.ReadFromNXT().Position;
