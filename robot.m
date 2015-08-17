@@ -27,10 +27,10 @@ for i = 2:size(M,1)
     [alpha, beta, gamma] = calcAngles(current, desired);
     fprintf('Angles (a,b,g) = (%d, %d, %d)\n',alpha,beta,gamma);
     current = desired;
-    beta_error = moveEngine(mB,-20,30 + beta_error);
-    alpha_error = moveEngine(mA,-90,alpha + alpha_error);
+    beta_error = moveEngine(mB,-20,-30*24/8 + beta_error);
+    alpha_error = moveEngine(mA,-20,alpha + alpha_error);
     gamma_error = moveEngine(mC,-20,gamma + gamma_error);
-    beta_error = moveEngine(mB,-20,beta - 30 + beta_error);
+    beta_error = moveEngine(mB,-20,beta + 30*24/8 + beta_error);
     mA.WaitFor();
     mB.WaitFor();
     mC.WaitFor();
