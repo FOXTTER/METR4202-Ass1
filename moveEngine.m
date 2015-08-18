@@ -19,16 +19,16 @@ if (port ==0)
         angle = angle + 7 * sign(angle);
     end
 elseif (port == 1)
-    if(angle > 0)
-        angle = angle + 0;
-    else
-        angle = angle + 0;
+    if(angle > 2)
+        angle = angle + (-2);
+    elseif (angle < -2)
+        angle = angle + (-2);
     end
 elseif (port == 2)
-    if(angle > 0)
-        angle = angle + 2;
-    elseif (angle < -3)
-        angle = angle + 3;
+    if(angle > 1)
+        angle = angle + (0);
+    elseif (angle < 0)
+        angle = angle + (0);
     end
 end
 engine.TachoLimit = abs(angle); % Angle for motor A

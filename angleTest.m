@@ -3,9 +3,9 @@ start = motor.ReadFromNXT().Position;
 if motor.Port == 0
     power = -25;
 elseif motor.Port ==1
-    power = -20;
+    power = -30;
 elseif motor.Port == 2
-    power = -15;
+    power = -20;
 end
 moveEngine(motor,power,angle,0);
 % Read Data and Show

@@ -25,6 +25,9 @@ gamma_error = 0;
 alpha_old = 0;
 securityAngle = 23;
 securityInterval = 7;
+enginePowerA = -50;
+enginePowerB = -30;
+enginePowerC = -20;
 for i = 2:size(M,1)
     %moveEngine(mB,-10,20);
     fprintf('Point: %d\n',i);
@@ -34,15 +37,15 @@ for i = 2:size(M,1)
     [alpha, beta, gamma] = calcAngles(current, desired);
     fprintf('Angles (a,b,g) = (%d, %d, %d)\n',alpha,beta,gamma);
     if beta > ((securityAngle-securityInterval)*(24/8))
-        beta_error = (moveEngine(mB,-10,-securityAngle*24/8 + beta_error, alpha_old))/(24/8);
-        alpha_error = moveEngine(mA,-50,alpha + alpha_error, alpha_old);
-        gamma_error = moveEngine(mC,-5,gamma + gamma_error, alpha_old);
-        beta_error = (moveEngine(mB,-10, securityAngle*24/8 + beta + beta_error, alpha_old))/(24/8);
+        beta_error = (moveEngine(mB,enginePowerB,-securityAngle*24/8 + beta_error, alpha_old))/(24/8);
+        alpha_error = moveEngine(mA,enginePowerA,alpha + alpha_error, alpha_old);
+        gamma_error = moveEngine(mC,enginePowerC,gamma + gamma_error, alpha_old);
+        beta_error = (moveEngine(mB,enginePowerB, securityAngle*24/8 + beta + beta_error, alpha_old))/(24/8);
     else
-        beta_error = (moveEngine(mB,-10,-securityAngle*24/8 + beta + beta_error, alpha_old))/(24/8);
-        alpha_error = moveEngine(mA,-50,alpha + alpha_error, alpha_old);
-        gamma_error = moveEngine(mC,-5,gamma + gamma_error, alpha_old);
-        beta_error = (moveEngine(mB,-10, securityAngle*24/8 + beta_error, alpha_old))/(24/8);
+        beta_error = (moveEngine(mB,enginePowerB,-securityAngle*24/8 + beta + beta_error, alpha_old))/(24/8);
+        alpha_error = moveEngine(mA,enginePowerA,alpha + alpha_error, alpha_old);
+        gamma_error = moveEngine(mC,enginePowerC,gamma + gamma_error, alpha_old);
+        beta_error = (moveEngine(mB,enginePowerB, securityAngle*24/8 + beta_error, alpha_old))/(24/8);
     end
 %     mA.WaitFor(); % is contained in moveEngine
 %     mB.WaitFor();

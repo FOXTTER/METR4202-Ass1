@@ -5,13 +5,16 @@ LEGO = 0.032;
 %Motor gearing
 mA_gear = 56/8;
 mB_gear = -24/8;
-mC_gear = 1;
+mC_gear = -24/8;
 % Position parameters of base
 base = [5.5*LEGO, -2.125*LEGO, 0];
 %Lengths of robot
+% base2a = 0.162;
+% a2b = 0.172;
+% b2c = 0.215;
 base2a = 0.162;
-a2b = 0.172;
-b2c = 0.215;
+a2b = 0.162;
+b2c = 0.239;
 % Position of joint A
 joint_A = [5.5*LEGO, -2.125*LEGO, base2a];
 % T length
