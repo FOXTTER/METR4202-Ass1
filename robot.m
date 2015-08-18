@@ -22,6 +22,7 @@ current = M(1,:,:);
 alpha_error = 0;
 beta_error = 0;
 gamma_error = 0;
+alpha_old = 0;
 for i = 2:size(M,1)
     %moveEngine(mB,-10,20);
     fprintf('Point: %d\n',i);
@@ -30,13 +31,14 @@ for i = 2:size(M,1)
     %Convert the point to angles for the motors
     [alpha, beta, gamma] = calcAngles(current, desired);
     fprintf('Angles (a,b,g) = (%d, %d, %d)\n',alpha,beta,gamma);
-    beta_error = (moveEngine(mB,-20,-30*24/8 + beta_error))/(24/8);
-    alpha_error = moveEngine(mA,-50,alpha + alpha_error);
-    gamma_error = moveEngine(mC,-5,gamma + gamma_error);
-    beta_error = (moveEngine(mB,-20,beta + 30*24/8 + beta_error))/(24/8);
+    beta_error = (moveEngine(mB,-10,-25*24/8 + beta + beta_error, alpha_old))/(24/8);
+    alpha_error = moveEngine(mA,-50,alpha + alpha_error, alpha_old);
+    gamma_error = moveEngine(mC,-5,gamma + gamma_error, alpha_old);
+    beta_error = (moveEngine(mB,-10, 25*24/8 + beta_error, alpha_old))/(24/8);
 %     mA.WaitFor(); % is contained in moveEngine
 %     mB.WaitFor();
 %     mC.WaitFor();
+    alpha_old = alpha;
     current = desired;
     pause(0.1);
 end

@@ -1,13 +1,13 @@
 function [] = angleTest(motor, angle)
 start = motor.ReadFromNXT().Position;
 if motor.Port == 0
-    power = -50;
+    power = -25;
 elseif motor.Port ==1
     power = -20;
 elseif motor.Port == 2
     power = -15;
 end
-moveEngine(motor,power,angle);
+moveEngine(motor,power,angle,0);
 % Read Data and Show
 pause(2)
 data = motor.ReadFromNXT().Position;

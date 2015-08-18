@@ -3,7 +3,7 @@ function [ alpha, beta, gamma ] = calcAngles(start, desired)
 % Lego unit conversion 4 dots = one big square
 LEGO = 0.032;
 %Motor gearing
-mA_gear = 55/8;
+mA_gear = 56/8;
 mB_gear = -24/8;
 mC_gear = 1;
 % Position parameters of base

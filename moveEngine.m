@@ -1,4 +1,4 @@
-function [ error ] = moveEngine( engine, power, angle )
+function [ error ] = moveEngine( engine, power, angle, alpha_old )
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 % Motor B
@@ -11,7 +11,13 @@ if (abs(angle) <= 1)
 end
 port = engine.Port;
 if (port ==0)
-    %Bla
+    % play compensation of motor A - Start has to be with positiv alpha
+    % No play at first motion
+    if (sign(angle) == sign(alpha_old)) && (alpha_old~=0)
+        angle = angle + 0;
+    elseif (sign(angle) ~= sign(alpha_old)) && (alpha_old~=0)
+        angle = angle + 7 * sign(angle);
+    end
 elseif (port == 1)
     if(angle > 0)
         angle = angle + 0;
