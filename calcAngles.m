@@ -15,8 +15,8 @@ b2c = 0.215;
 % Position of joint A
 joint_A = [5.5*LEGO, -2.125*LEGO, base2a];
 % T length
-a2c_new = norm(desired - joint_A);
-a2c_old = norm(start - joint_A);
+a2c_new = norm(desired - joint_A - 0.008);  %substracting 0.008 as horizontal offset from base to joint A
+a2c_old = norm(start - joint_A - 0.008);
 % Calculations
 % Alpha = first joint
 alpha = int32(rad2deg(atan2(desired(1)-base(1),desired(2)-base(2)) - atan2(start(1)-base(1),start(2)-base(2)))*mA_gear);
