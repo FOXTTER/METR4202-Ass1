@@ -5,21 +5,18 @@ LEGO = 0.032;
 %Motor gearing
 mA_gear = 56/8;
 mB_gear = -24/8;
-mC_gear = -24/8;
+mC_gear = 36/12;
 % Position parameters of base
 base = [5.5*LEGO, -2.125*LEGO, 0];
 %Lengths of robot
-% base2a = 0.162;
-% a2b = 0.172;
-% b2c = 0.215;
 base2a = 0.162;
-a2b = 0.162;
-b2c = 0.239;
+a2b = 0.156;
+b2c = 0.212;
 % Position of joint A
 joint_A = [5.5*LEGO, -2.125*LEGO, base2a];
 % T length
-a2c_new = norm(desired - joint_A - 0.008);  %substracting 0.008 as horizontal offset from base to joint A
-a2c_old = norm(start - joint_A - 0.008);
+a2c_new = norm(desired - joint_A);  %substracting 0.008 as horizontal offset from base to joint A
+a2c_old = norm(start - joint_A);
 % Calculations
 % Alpha = first joint
 alpha = int32(rad2deg(atan2(desired(1)-base(1),desired(2)-base(2)) - atan2(start(1)-base(1),start(2)-base(2)))*mA_gear);
