@@ -19,16 +19,16 @@ pause
 M(:,1:2) = M(:,1:2)*0.032;
 M(:,3) = M(:,3)*0.020;
 %current = M(1,:,:);
-current = [1*0.032 0*0.032 0*0.02];
+current = [1*0.032 0*0.032 0.2*0.02];
 alpha_error = 0;
 beta_error = 0;
 gamma_error = 0;
-alpha_old = 0;
+alpha_old_sign = 0;
 securityAngle = 15;
 enginePowerA = -50;
 enginePowerB = -15;
 enginePowerC = -30;
-optimal = tsp_dp1(M)
+%optimal = tsp_dp1(M)
 %for i = 2:size(M,1)
 i = 1;
 base2a = 0.162;
@@ -36,27 +36,37 @@ joint_A = [5.5*0.032, -2.125*0.032, base2a];
 T_0 = norm(joint_A - [1*0.032, 0, 0]);
 beta_0 = int32(rad2deg(acos(base2a/T_0)));
 mB.ResetPosition();
-%%
+beta = 0;
+beta_sum = 0;
+
 while(1)
-    %moveEngine(mB,-10,20);
     fprintf('Point: %d\n',i);
-    disp(M(optimal(i),:,:))
-    desired = M(optimal(i),:,:);
+    disp(M(i,:,:))
+    desired = M(i,:,:);
     %Convert the point to angles for the motors
     [alpha, beta, gamma] = calcAngles(current, desired);
     fprintf('Angles (a,b,g) = (%d, %d, %d)\n',alpha,beta,gamma);
-    %securityAngle = int32(rad2deg(asin((0.10 - base2a)/(norm(current - joint_A)))) - mB.ReadFromNXT().Position);
-    securityAngle = int32((90-rad2deg(asin((base2a - 0.1)/(norm(current - joint_A)))) - ((mB.ReadFromNXT().Position/3) + beta_0)));
-    pause
-    beta_error = (moveEngine(mB,enginePowerB,securityAngle*24/8 + beta_error, alpha_old))/(24/8);
-    alpha_error = moveEngine(mA,enginePowerA,alpha + alpha_error, alpha_old);
-    gamma_error = moveEngine(mC,enginePowerC,gamma + gamma_error, alpha_old);
-    beta_error = (moveEngine(mB,enginePowerB, -securityAngle*24/8 + beta + beta_error, alpha_old))/(24/8);
+    
+    %alpha_old = mA.ReadFromNXT().Position;
+    %beta_old = mB.ReadFromNXT().Position;
+    %gamma_old = mC.ReadFromNXT().Position;
+    securityAngle = -170 + mB.ReadFromNXT().Position;
+    
+    moveEngine(mB,enginePowerB,securityAngle, alpha_old_sign);
+    mB.WaitFor();
+    moveEngine(mA,enginePowerA,alpha, alpha_old_sign);
+    moveEngine(mC,enginePowerC,gamma, alpha_old_sign);
+    mA.WaitFor();
+    mC.WaitFor();
+    moveEngine(mB,enginePowerB, -securityAngle + beta, alpha_old_sign);
 %     mA.WaitFor(); % is contained in moveEngine
-%     mB.WaitFor();
+    mB.WaitFor();
 %     mC.WaitFor();
-    alpha_old = alpha;
+    alpha_old_sign = alpha;
+%   pause(0.8);
+    %alpha_error = alpha + (mA.ReadFromNXT().Position - alpha_old);
+    %beta_error = beta + (mB.ReadFromNXT().Position - beta_old);
+    %gamma_error = gamma + (mC.ReadFromNXT().Position - gamma_old);
     current = desired;
-    %pause(0.8);
-    i = mod(i,length(optimal)-1)+1;
+    i = mod(i,length(M(:,1)))+1;
 end

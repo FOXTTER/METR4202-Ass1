@@ -35,7 +35,7 @@ engine.TachoLimit = abs(angle); % Angle for motor A
 engine.Power = power * sign(angle);
 engine.ActionAtTachoLimit = 'Holdbrake';
 engine.SendToNXT();
-engine.WaitFor();
+%engine.WaitFor();
 data = engine.ReadFromNXT().Position;
 % error = initAngle + (data - start); % Commented out due to sign problems
 % from motor to motor
