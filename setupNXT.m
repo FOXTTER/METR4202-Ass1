@@ -1,9 +1,8 @@
 function [h] = setupNXT()
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+% Resets NXT and opens connection
 COM_CloseNXT('all');
 close all
-clear all
+clear
 h = COM_OpenNXT();
 COM_SetDefaultNXT(h)
 %NXT_PlayTone(450, 500);

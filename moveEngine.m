@@ -1,9 +1,5 @@
 function [ error ] = moveEngine( engine, power, angle, alpha_old )
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-% Motor B
-initAngle = angle;
-start = engine.ReadFromNXT().Position;
+%Function moves the specified engine
 error = 0;
 if (abs(angle) <= 1)
     disp('Angle is 0');
@@ -18,13 +14,15 @@ if (port ==0)
     elseif (sign(angle) ~= sign(alpha_old)) && (alpha_old~=0)
         angle = angle + 4 * sign(angle);
     end
-elseif (port == 1)
+elseif (port == 1) % Error compensation for the other engines
+    % No compensation for B
     if(angle > 2)
         angle = angle + (0);
     elseif (angle < -2)
         angle = angle + (0);
     end
 elseif (port == 2)
+    % Little compensation for C
     if(angle > 1)
         angle = angle + (0);
     elseif (angle < 0)
@@ -35,9 +33,5 @@ engine.TachoLimit = abs(angle); % Angle for motor A
 engine.Power = power * sign(angle);
 engine.ActionAtTachoLimit = 'Holdbrake';
 engine.SendToNXT();
-%engine.WaitFor();
-data = engine.ReadFromNXT().Position;
-% error = initAngle + (data - start); % Commented out due to sign problems
-% from motor to motor
 end
 
